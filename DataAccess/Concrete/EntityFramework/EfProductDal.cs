@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,56 +11,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProductDal : IProductDal
+    //IProductDal'a ne gerek var dediğimizde business IProducctdal'a bağımlıydı dolayısı ile dataaccessTE ef çalışıyoruz yarın başka bir şeyde çalışabiliriz 
+    //buraya ürüne ait özel operasyonları koyucaz. yani ortak crudları efentityRepositoryBase'e koyucaz. producta özel operasyonları da IProductdal interfaceine yazıp implemenete edicez.
+    public class EfProductDal : EfEntityRepositoryBase<Product, NorthwindContext>, IProductDal
     {
-        //IDisposable pattern implementation of c#
-        public void Add(Product entity)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                var addedEntity = context.Entry(entity); // referansı yakala
-                addedEntity.State = EntityState.Added; // eklenecek nesne
-                context.SaveChanges(); // ekle
-            }
-        }
-
-        public void Delete(Product entity)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                var deletedEntity = context.Entry(entity); // referansı yakala
-                deletedEntity.State = EntityState.Deleted; // silinecek nesne
-                context.SaveChanges(); // sil
-            }
-        }
-
-        public Product Get(Expression<Func<Product, bool>> filter)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                return context.Set<Product>().SingleOrDefault(filter);
-
-            }
-        }
-
-        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                return filter == null ? 
-                    context.Set<Product>().ToList()// filtre null ise bu çalışır (//db setteki oraya yerleş ve list olarak döndür)
-                    : context.Set<Product>().Where(filter).ToList();
-            }
-        }
-
-        public void Update(Product entity)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                var updatedEntity = context.Entry(entity); // referansı yakala
-                updatedEntity.State = EntityState.Modified; // güncellenecek nesne
-                context.SaveChanges(); // güncelle
-            }
-        }
+        
     }
 }
