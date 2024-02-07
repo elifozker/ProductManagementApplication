@@ -12,6 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//autofac, ninject , castlewindsor, structureMap, LightInject, DryInject
+//bunlar .net projelerinde þu aþaðýdakileri yapýyor. ýoc container için altaypý sunar
+//aop yapacaðýz
 builder.Services.AddSingleton<IProductService, ProductManager>();
 builder.Services.AddSingleton<IProductDal, EfProductDal>();
 
