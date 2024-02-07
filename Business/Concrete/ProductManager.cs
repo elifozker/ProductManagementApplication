@@ -36,7 +36,7 @@ namespace Business.Concrete // bir iş sınıfı başka sınıfları newlemez
         //iş kodları yazılır
         public IDataResult<List<Product>> GetAll() //kurallardan geçtikten sonra return edilir.
         {
-            if(DateTime.Now.Hour == 22)
+            if(DateTime.Now.Hour == 23)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
